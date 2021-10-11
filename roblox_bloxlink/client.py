@@ -1,6 +1,10 @@
 from .exceptions import BloxlinkError
 
+from typing import Union
+
 from roblox import Client
+from roblox.bases.baseuser import BaseUser
+from roblox.users import User
 from roblox.utilities.shared import ClientSharedObject
 from roblox.utilities.requests import Requests
 
@@ -18,10 +22,11 @@ class BloxlinkClient:
 
         self.base_url: str = base_url
 
-    async def get_user(self, user_id: int):
+    async def get_user(self, user_id: int, expand: bool = True) -> Union[User, BaseUser]:
         """
         Parameters:
             user_id: The Discord user's ID.
+            expand: Whether to convert the object into a full User object.
         """
         user_response = await self._requests.get(
             url=self._shared.url_generator.get_url(
@@ -39,3 +44,8 @@ class BloxlinkClient:
             response_message = user_data["error"]
             raise BloxlinkError(f"{response_status}: {response_message}")
 
+        user_id = int(user_data["primaryAccount"])
+        if expand:
+            return await self._client.get_user(user_id=user_id)
+        else:
+            return self._client.get_base_user(user_id=user_id)
