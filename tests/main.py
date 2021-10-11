@@ -7,6 +7,8 @@ bloxlink = BloxlinkClient(roblox)
 
 
 async def main():
-    user = await bloxlink.get_user(1)
+    user = await bloxlink.get_user(84117866944663552)  # justin
+    assert user.id == 92587045
+    assert user.name == "Tigerism"
 
 asyncio.get_event_loop().run_until_complete(main())
