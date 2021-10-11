@@ -31,3 +31,11 @@ class BloxlinkClient:
             )
         )
         user_data = user_response.json()
+        response_status = user_data["status"]
+        response_status_ok = response_status == "ok"
+
+        if not response_status_ok:
+            # if the response was not OK, raise an error
+            response_message = user_data["error"]
+            raise BloxlinkError(f"{response_status}: {response_message}")
+

@@ -1,2 +1,2 @@
-class BloxlinkError:
+class BloxlinkError(Exception):
     pass
