@@ -1,0 +1,2 @@
+class BloxlinkError:
+    pass
