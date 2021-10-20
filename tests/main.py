@@ -1,9 +1,9 @@
 import asyncio
 from roblox import Client
-from roblox_bloxlink import BloxlinkClient, BloxlinkError
+from roblox_discord import VerificationClient, BloxlinkError
 
 roblox = Client()
-bloxlink = BloxlinkClient(roblox)
+bloxlink = VerificationClient(roblox)
 
 
 async def main():

@@ -6,10 +6,10 @@ from roblox import Client
 from roblox.bases.baseuser import BaseUser
 from roblox.users import User
 from roblox.utilities.shared import ClientSharedObject
-from roblox.utilities.requests import Requests
+from roblox.utilities.requests import CleanAsyncClient
 
 
-class BloxlinkClient:
+class VerificationClient:
     def __init__(self, client: Client, base_url: str = "blox.link"):
         """
         Parameters:
@@ -18,7 +18,7 @@ class BloxlinkClient:
         """
         self._client: Client = client
         self._shared: ClientSharedObject = self._client._shared
-        self._requests: Requests = self._shared.requests
+        self._requests: CleanAsyncClient = CleanAsyncClient()
 
         self.base_url: str = base_url
 

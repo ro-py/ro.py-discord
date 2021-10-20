@@ -4,11 +4,11 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup_info = {
-    "name": "ro.py-bloxlink",
+    "name": "ro.py-discord",
     "version": "2.0.0",
     "author": "jmkdev",
     "author_email": "jmk@jmksite.dev",
-    "description": "Small library to connect bloxlink and ro.py",
+    "description": "Small library to connect Discord verification tools and ro.py",
     "long_description": long_description,
     "long_description_content_type": "text/markdown",
     "url": "https://github.com/jmkd3v/ro.py-bloxlink",
