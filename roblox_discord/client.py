@@ -15,7 +15,9 @@ class VerificationClient:
             self,
             client: Client,
             bloxlink_url: str = "blox.link",
-            rover_url: str = "verify.eryn.io"
+            bloxlink_subdomain: str = "api",
+            rover_url: str = "eryn.io",
+            rover_subdomain: str = "verify"
     ):
         """
         Parameters:
@@ -28,7 +30,9 @@ class VerificationClient:
         self._requests: CleanAsyncClient = CleanAsyncClient()
 
         self.bloxlink_url: str = bloxlink_url
+        self.bloxlink_subdomain: str = bloxlink_subdomain
         self.rover_url: str = rover_url
+        self.rover_subdomain: str = rover_subdomain
 
     async def get_user_bloxlink(self, user_id: int, expand: bool = True) -> Union[User, BaseUser]:
         """
@@ -42,23 +46,23 @@ class VerificationClient:
             A `User` if `expand` is True, and a `BaseUser` otherwise.
         """
 
-        user_response = await self._requests.get(
+        bloxlink_response = await self._requests.get(
             url=self._shared.url_generator.get_url(
-                subdomain="api",
+                subdomain=self.bloxlink_subdomain,
                 path=f"v1/user/{user_id}",
                 base_url=self.bloxlink_url
             )
         )
-        user_data = user_response.json()
-        response_status = user_data["status"]
+        bloxlink_data = bloxlink_response.json()
+        response_status = bloxlink_data["status"]
         response_status_ok = response_status == "ok"
 
         if not response_status_ok:
             # if the response was not OK, raise an error
-            response_message = user_data["error"]
+            response_message = bloxlink_data["error"]
             raise BloxlinkError(f"{response_status}: {response_message}")
 
-        user_id = int(user_data["primaryAccount"])
+        user_id = int(bloxlink_data["primaryAccount"])
         if expand:
             return await self._client.get_user(user_id=user_id)
         else:
@@ -75,3 +79,26 @@ class VerificationClient:
         Returns:
             A `User` if `expand` is True, and a `RoVerPartialUser` otherwise.
         """
+        rover_response = await self._requests.get(
+            url=self._shared.url_generator.get_url(
+                subdomain=self.rover_subdomain,
+                path=f"/api/user/{user_id}",
+                base_url=self.rover_url
+            )
+        )
+        rover_data = rover_response.json()
+        response_status = rover_data["status"]
+        response_status_ok = response_status == "ok"
+
+        if not response_status_ok:
+            # if the response was not OK, raise an error
+            response_message = rover_data["error"]
+            raise RoVerError(f"{rover_response.status_code}: {response_message}")
+
+        if expand:
+            return await self._client.get_user(user_id=rover_data["robloxId"])
+        else:
+            return RoVerPartialUser(
+                shared=self._shared,
+                data=rover_data
+            )
