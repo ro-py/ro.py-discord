@@ -1,5 +1,5 @@
-# ro.py-bloxlink
-Small library to connect bloxlink and ro.py.
+# ro.py-discord
+Small library to connect Discord with ro.py via Bloxlink and RoVer.
 
 ```py
 import asyncio
