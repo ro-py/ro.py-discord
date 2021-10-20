@@ -1,2 +1,2 @@
 from .client import VerificationClient
-from .exceptions import BloxlinkError
+from .exceptions import VerifyError, BloxlinkError, RoVerError

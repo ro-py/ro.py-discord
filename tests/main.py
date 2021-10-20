@@ -3,7 +3,7 @@ from roblox import Client
 from roblox_discord import VerificationClient, BloxlinkError
 
 roblox = Client()
-bloxlink = VerificationClient(roblox)
+verification = VerificationClient(roblox)
 
 
 async def main():
@@ -12,21 +12,21 @@ async def main():
     I'm not using one now because I don't care enough
     """
 
-    user = await bloxlink.get_user(84117866944663552)  # justin
+    user = await verification.get_user_bloxlink(84117866944663552)  # justin
     assert user.id == 92587045
     assert user.name == "Tigerism"
 
-    base_user = await bloxlink.get_user(84117866944663552, expand=False)
+    base_user = await verification.get_user_bloxlink(84117866944663552, expand=False)
     assert base_user.id == 92587045
 
     try:
-        await bloxlink.get_user(0)
+        await verification.get_user_bloxlink(0)
         raise AssertionError
     except BloxlinkError:
         pass
 
     try:
-        await bloxlink.get_user(0, expand=False)
+        await verification.get_user_bloxlink(0, expand=False)
         raise AssertionError
     except BloxlinkError:
         pass
