@@ -7,11 +7,11 @@ from roblox import Client
 from roblox_discord import VerificationClient, BloxlinkError
 
 roblox = Client()
-bloxlink = VerificationClient(roblox)
+verification = VerificationClient(roblox)
 
 
 async def main():
-    user = await bloxlink.get_user(84117866944663552)  # justin
+    user = await verification.get_user_bloxlink(84117866944663552)  # justin
     print("Name:", user.name)
     print("Status:", await user.get_status())
 
