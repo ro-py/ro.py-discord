@@ -23,8 +23,8 @@ setup_info = {
     ],
     "project_urls": {
         "Discord": "https://discord.gg/tjRfCbDMSk",
-        "Issue Tracker": "https://github.com/jmkd3v/ro.py-bloxlink/issues",
-        "GitHub": "https://github.com/jmkd3v/ro.py-bloxlink",
+        "Issue Tracker": "https://github.com/ro-py/ro.py-discord/issues",
+        "GitHub": "https://github.com/ro-py/ro.py-discord",
         "Twitter": "https://twitter.com/jmkdev"
     },
     "python_requires": '>=3.7',
