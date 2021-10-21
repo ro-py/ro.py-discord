@@ -51,5 +51,12 @@ async def main():
     except RoVerError:
         pass
 
+    # Both
+    user = await verification.get_user(197683356643753984)
+    assert user.id == 968108160
+
+    partial_user = await verification.get_user(197683356643753984, expand=False)
+    assert partial_user.id == 968108160
+
 
 asyncio.get_event_loop().run_until_complete(main())

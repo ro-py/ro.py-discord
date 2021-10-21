@@ -1,4 +1,4 @@
-from .exceptions import BloxlinkError, RoVerError
+from .exceptions import VerifyError, BloxlinkError, RoVerError
 from .partials import RoVerPartialUser
 
 from typing import Union
@@ -102,3 +102,26 @@ class VerificationClient:
                 shared=self._shared,
                 data=rover_data
             )
+
+    async def get_user(self, user_id: int, expand: bool = True) -> Union[User, BaseUser, RoVerPartialUser]:
+        """
+        Gets a Roblox user from their Discord ID using the Bloxlink or RoVer APIs. Prioritizes Bloxlink.
+        This object sends anywhere from 1 to 3 requests depending on configuration.
+        If expand is set to False, the .id property should be relied on and not the .name property.
+
+        Parameters:
+            user_id: The user's Discord ID.
+            expand: Whether to return a User object rather than a BaseUser/RoVerPartialUser object
+
+        """
+        try:
+            return await self.get_user_bloxlink(user_id=user_id, expand=expand)
+        except BloxlinkError:
+            pass
+
+        try:
+            return await self.get_user_rover(user_id=user_id, expand=expand)
+        except RoVerError:
+            pass
+
+        raise VerifyError("This user is not linked with Bloxlink or RoVer.")
