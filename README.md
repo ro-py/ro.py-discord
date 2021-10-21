@@ -1,20 +1,13 @@
-# ro.py-discord
-Small library to connect Discord with ro.py via Bloxlink and RoVer.
+<p align="center" width="100%">
+    <img src="./resources/textlogo.svg" alt="ro.py-discord" height="128em" />
+    <br>
+</p>
 
-```py
-import asyncio
-from roblox import Client
-from roblox_discord import VerificationClient, BloxlinkError
+<p align="center">
+    ro.py-discord is a small library that connects ro.py to Roblox verification services.
+</p>
 
-roblox = Client()
-verification = VerificationClient(roblox)
-
-
-async def main():
-    user = await verification.get_user_bloxlink(84117866944663552)  # justin
-    print("Name:", user.name)
-    print("Status:", await user.get_status())
-
-
-asyncio.get_event_loop().run_until_complete(main())
-```
+<p align="center">
+    Skip the boilerplate and easily create Discord bots that connect your users to their Roblox accounts without dealing with web requests.<br />
+    ro.py-bloxlink works with both Bloxlink and RoVer to connect your users to their Roblox accounts, so no extra verification flow is needed.
+</p>
